@@ -1,13 +1,12 @@
 package com.API.testAPI.controller;
 
+import com.API.testAPI.model.Cart;
+import com.API.testAPI.model.Product;
 import com.API.testAPI.service.ICartService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
 
@@ -18,6 +17,15 @@ public class CartController {
     @Autowired
     ICartService cartService;
 
+    @PostMapping
+    public Cart save(@RequestBody Cart cart) {
+        return cartService.save(cart);
+    }
+
+    @DeleteMapping("/{id}")
+    public void detele(@PathVariable Cart cart) {
+        cartService.delete(cart);
+    }
 
     @PostMapping("/addProductToNewCart")
     public ResponseEntity<String> addProductToNewCart(@RequestBody Map<String, Object> payload) {
