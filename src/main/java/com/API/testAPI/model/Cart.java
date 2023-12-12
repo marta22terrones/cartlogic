@@ -35,4 +35,11 @@ public class Cart {
     public void setCartItems(List<CartDetail> cartItems) {
         this.cartDetails = cartDetails;
     }
+
+    public void addCartDetail(CartDetail cartDetail) {
+        if (cartDetail != null) {
+            cartDetail.setCart(this);
+            this.cartDetails.add(cartDetail);
+        }
+    }
 }
