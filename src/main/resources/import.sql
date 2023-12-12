@@ -3,3 +3,5 @@ INSERT INTO products (description, price, stock) VALUES ('Grey T-Shirt L', 19.99
 INSERT INTO products (description, price, stock) VALUES ('Grey T-Shirt XL', 19.99, 7);
 INSERT INTO products (description, price, stock) VALUES ('Pink Skirt M', 12.99, 17);
 INSERT INTO products (description, price, stock) VALUES ('Pink Skirt L', 12.99, 5);
+INSERT INTO products (description, price, stock) VALUES ('Red Short Skirt S', 12.99, 5);
+INSERT INTO products (description, price, stock) VALUES ('Red Short Skirt XL', 12.99, 1);

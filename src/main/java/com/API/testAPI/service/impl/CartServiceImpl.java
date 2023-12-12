@@ -1,10 +1,12 @@
-package com.API.testAPI.service;
+package com.API.testAPI.service.impl;
 
 import com.API.testAPI.model.Cart;
 import com.API.testAPI.model.CartDetail;
 import com.API.testAPI.model.Product;
 import com.API.testAPI.repository.ICartRepository;
 import com.API.testAPI.repository.IProductRepository;
+import com.API.testAPI.service.ICartService;
+import com.API.testAPI.service.IProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -47,6 +49,11 @@ public class CartServiceImpl implements ICartService {
         cart.setLastActivity(LocalDateTime.now());
         cartRepository.save(cart);
 
+    }
+
+    @Override
+    public Optional<Cart> getById(Long id) {
+        return cartRepository.findById(id);
     }
 
     @Override

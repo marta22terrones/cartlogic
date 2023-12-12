@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("api/carts")
@@ -17,6 +18,11 @@ public class CartController {
     @Autowired
     ICartService cartService;
 
+    @GetMapping("/{id}")
+    public ResponseEntity<Cart> getCartById(@PathVariable Long id) {
+        Optional<Cart> cart = cartService.getById(id);
+        return cart.map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
+    }
     @PostMapping
     public Cart save(@RequestBody Cart cart) {
         return cartService.save(cart);

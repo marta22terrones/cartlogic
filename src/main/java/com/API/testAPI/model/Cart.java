@@ -1,5 +1,6 @@
 package com.API.testAPI.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
@@ -17,6 +18,7 @@ public class Cart {
     private LocalDateTime lastActivity;
 
     @OneToMany(mappedBy = "cart", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
     private List<CartDetail> cartDetails = new ArrayList<>();
 
     // Constructor
