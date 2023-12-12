@@ -28,6 +28,7 @@ public class Product {
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<CartDetail> details = new ArrayList<>();
 
+    public Product() { }
     public Product(Long id, String name, double price, int stock) {
         this.id = id;
         this.name = name;

@@ -5,6 +5,7 @@ import com.API.testAPI.repository.IProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -12,6 +13,12 @@ public class ProductServiceImpl implements IProductService {
 
     @Autowired
     private IProductRepository productRepository;
+
+    @Override
+    public List<Product> getAll() {
+        return productRepository.findAll();
+    }
+
     @Override
     public Optional<Product> get(Integer id) {
         return productRepository.findById(id);

@@ -17,7 +17,6 @@ public class Cart {
 
     // Constructor
     public Cart() {
-        // Initialize cartItems, so our API can not throw NullPointerException
         this.cartDetails = new ArrayList<>();
     }
 
