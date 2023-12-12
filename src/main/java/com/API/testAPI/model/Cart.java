@@ -21,7 +21,6 @@ public class Cart {
     @JsonManagedReference
     private List<CartDetail> cartDetails = new ArrayList<>();
 
-    // Constructor
     public Cart() {
         this.cartDetails = new ArrayList<>();
     }

@@ -2,12 +2,14 @@ package com.API.testAPI.controller;
 
 import com.API.testAPI.model.Cart;
 import com.API.testAPI.model.Product;
+import com.API.testAPI.model.dto.CartItemInfoDTO;
 import com.API.testAPI.service.ICartService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -23,6 +25,13 @@ public class CartController {
         Optional<Cart> cart = cartService.getById(id);
         return cart.map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
     }
+
+    @GetMapping("/cartInfo/{id}")
+    public ResponseEntity<List<CartItemInfoDTO>> getCartInfoById(@PathVariable Long id) {
+        List<CartItemInfoDTO> cartItems = cartService.getCartInfoById(id);
+        return ResponseEntity.ok(cartItems);
+    }
+
     @PostMapping
     public Cart save(@RequestBody Cart cart) {
         return cartService.save(cart);

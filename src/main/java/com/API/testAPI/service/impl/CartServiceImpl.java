@@ -3,6 +3,8 @@ package com.API.testAPI.service.impl;
 import com.API.testAPI.model.Cart;
 import com.API.testAPI.model.CartDetail;
 import com.API.testAPI.model.Product;
+import com.API.testAPI.model.dto.CartItemInfoDTO;
+import com.API.testAPI.repository.ICartDetailRepository;
 import com.API.testAPI.repository.ICartRepository;
 import com.API.testAPI.repository.IProductRepository;
 import com.API.testAPI.service.ICartService;
@@ -11,7 +13,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class CartServiceImpl implements ICartService {
@@ -21,6 +26,8 @@ public class CartServiceImpl implements ICartService {
     @Autowired
     private IProductRepository productRepository;
 
+    @Autowired
+    private ICartDetailRepository cartDetailRepository;
     @Autowired
     private ICartRepository cartRepository;
 
@@ -56,6 +63,28 @@ public class CartServiceImpl implements ICartService {
         return cartRepository.findById(id);
     }
 
+    public List<CartItemInfoDTO> getCartInfoById(Long cartId) {
+        Optional<Cart> cartOptional = cartRepository.findById(cartId);
+
+        if (cartOptional.isPresent()) {
+            Cart cart = cartOptional.get();
+
+            return cart.getCartDetails().stream()
+                    .map(cartDetail -> {
+                        Product product = cartDetail.getProduct();
+                        return new CartItemInfoDTO(
+                                product.getDescription(),
+                                product.getPrice(),
+                                cartDetail.getQuantity()
+                        );
+                    })
+                    .collect(Collectors.toList());
+        }
+
+        return Collections.emptyList();
+        }
+
+
     @Override
     public Cart save(Cart cart) {
         return cartRepository.save(cart);
@@ -89,6 +118,26 @@ public class CartServiceImpl implements ICartService {
         // Update of activy
         newCart.setLastActivity(LocalDateTime.now());
         cartRepository.save(newCart);
+    }
+
+    public CartItemInfoDTO getCartItemInfoById(Long cartItemId) {
+        CartDetail cartItem = cartDetailRepository.findById(cartItemId)
+                .orElseThrow(() -> new RuntimeException("CartItem not found with ID: " + cartItemId));
+
+        Product product = cartItem.getProduct();
+
+        CartItemInfoDTO cartItemInfo = mapCartItemInfoDTO(product, cartItem);
+
+        return cartItemInfo;
+    }
+
+    private CartItemInfoDTO mapCartItemInfoDTO(Product product, CartDetail cartDetail) {
+        CartItemInfoDTO cartItemInfoDTO = new CartItemInfoDTO();
+        cartItemInfoDTO.setDescription(product.getDescription());
+        cartItemInfoDTO.setPrice(product.getPrice());
+        cartItemInfoDTO.setQuantity(cartDetail.getQuantity());
+
+        return cartItemInfoDTO;
     }
 
 }
