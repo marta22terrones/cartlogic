@@ -18,7 +18,7 @@ public class CartCleanUpServiceImpl implements ICartCleanUpService {
     @Override
     @Scheduled(fixedRate = 600000)
     public void cleanupInactiveCarts() {
-        //TODO Inactive carts funcionality doesn't work
+
         System.out.println("Executing cleanupInactiveCarts...");
         LocalDateTime threshold = LocalDateTime.now().minusMinutes(10);
 
