@@ -19,7 +19,7 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String name;
+    private String description;
 
     private double price;
 
@@ -29,9 +29,9 @@ public class Product {
     private List<CartDetail> details = new ArrayList<>();
 
     public Product() { }
-    public Product(Long id, String name, double price, int stock) {
+    public Product(Long id, String description, double price, int stock) {
         this.id = id;
-        this.name = name;
+        this.description = description;
         this.price = price;
         this.stock = stock;
     }
@@ -44,12 +44,12 @@ public class Product {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getDescription() {
+        return description;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public double getPrice() {
@@ -80,7 +80,7 @@ public class Product {
     public String toString() {
         return "Product{" +
                 "id=" + id +
-                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
                 ", price=" + price +
                 ", stock=" + stock +
                 '}';

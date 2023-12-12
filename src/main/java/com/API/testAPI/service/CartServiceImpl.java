@@ -8,6 +8,7 @@ import com.API.testAPI.repository.IProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Service
@@ -42,6 +43,8 @@ public class CartServiceImpl implements ICartService {
             productService.save(product);
         }
 
+        // Update of activy
+        cart.setLastActivity(LocalDateTime.now());
         cartRepository.save(cart);
 
     }
@@ -75,9 +78,11 @@ public class CartServiceImpl implements ICartService {
                 product.setStock(product.getStock() - quantity);
                 productService.save(product);
             }
+
+        // Update of activy
+        newCart.setLastActivity(LocalDateTime.now());
         cartRepository.save(newCart);
-        }
-
-
     }
+
+}
 
