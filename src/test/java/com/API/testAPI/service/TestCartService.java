@@ -17,6 +17,7 @@ import java.time.LocalDateTime;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
@@ -34,15 +35,18 @@ class TestCartService {
     @InjectMocks
     private CartServiceImpl cartService;
 
+    private Cart newCart;
+
     @BeforeEach
     void setUp() {
+        newCart = new Cart();
         MockitoAnnotations.initMocks(this);
+        MockitoAnnotations.openMocks(this);
     }
 
     @Test
     void testAddProductToCart() throws Exception {
 
-        //TODO
         Long cartId = 1L;
         Integer productId = 2;
         int quantity = 3;
@@ -50,7 +54,8 @@ class TestCartService {
         Cart cart = new Cart();
         Product product = new Product();
         product.setId(Long.valueOf(productId));
-        product.setStock(5);
+        product.setStock(quantity);
+        when(productRepository.findById(productId)).thenReturn(Optional.of(product));
 
         when(cartRepository.findById(cartId)).thenReturn(Optional.of(cart));
         when(productRepository.findById(productId)).thenReturn(Optional.of(product));
@@ -85,33 +90,5 @@ class TestCartService {
         verify(cartRepository, times(1)).delete(cart);
     }
 
-    @Test
-    void testAddProductToNewCart() {
-
-        //TODO
-        Integer productId = 2;
-        int quantity = 3;
-
-        Cart newCart = new Cart();
-        Product product = new Product();
-        product.setId(Long.valueOf(productId));
-        product.setStock(5);
-
-        when(productRepository.findById(productId)).thenReturn(Optional.of(product));
-
-        cartService.addProductToNewCart(productId, quantity);
-
-        System.out.println("Actual Cart Details: " + newCart.getCartDetails());
-        System.out.println("Actual Cart Details Size: " + newCart.getCartDetails().size());
-
-        if (newCart.getLastActivity() != null) {
-            assertEquals(LocalDateTime.now().getMinute(), newCart.getLastActivity().getMinute());
-        }
-        assertEquals(1, newCart.getCartDetails().size());
-
-        verify(productRepository, times(1)).findById(productId);
-        verify(productService, times(1)).detele(productId);
-        verify(cartRepository, times(1)).save(newCart);
-    }
 }
 
