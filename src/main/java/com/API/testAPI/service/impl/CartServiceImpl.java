@@ -96,6 +96,11 @@ public class CartServiceImpl implements ICartService {
     }
 
     @Override
+    public void deleteById(Long id) {
+        cartRepository.deleteById(id);
+    }
+
+    @Override
     public void addProductToNewCart(Integer productId, int quantity) {
         Product product = productRepository.findById(productId)
                 .orElseThrow(() -> new RuntimeException("Product not found with ID: " + productId));

@@ -12,6 +12,7 @@ public interface ICartService {
     List<CartItemInfoDTO> getCartInfoById(Long cartId);
     public Cart save(Cart cart);
     public void delete(Cart cart);
+    public void deleteById(Long id);
     public void addProductToNewCart(Integer productId, int quantity);
     public void addProductToCart(Long cartId, Integer productId, int quantity) throws Exception;
     public CartItemInfoDTO getCartItemInfoById(Long cartItemId);

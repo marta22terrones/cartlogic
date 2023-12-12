@@ -15,4 +15,5 @@ public interface ICartRepository extends JpaRepository<Cart, Long> {
     @Query("SELECT c FROM Cart c WHERE c.lastActivity < :threshold")
     List<Cart> findByLastActivityBefore(@Param("threshold") LocalDateTime threshold);
 
+
 }

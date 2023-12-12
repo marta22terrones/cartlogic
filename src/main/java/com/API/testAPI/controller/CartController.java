@@ -5,10 +5,12 @@ import com.API.testAPI.model.Product;
 import com.API.testAPI.model.dto.CartItemInfoDTO;
 import com.API.testAPI.service.ICartService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.swing.text.html.Option;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -38,8 +40,9 @@ public class CartController {
     }
 
     @DeleteMapping("/{id}")
-    public void detele(@PathVariable Cart cart) {
-        cartService.delete(cart);
+    public ResponseEntity<Void> deleteById(@PathVariable Long id) {
+        cartService.deleteById(id);
+        return ResponseEntity.noContent().build();
     }
 
     @PostMapping("/addProductToNewCart")
